@@ -96,6 +96,10 @@ public:
 
     status_t lock(buffer_handle_t handle, uint32_t usage, const Rect& bounds, void** vaddr);
 
+    // Android 13 ABI retained for stock MediaTek video-telephony libraries.
+    status_t lock(buffer_handle_t handle, uint32_t usage, const Rect& bounds, void** vaddr,
+                  int* outBytesPerPixel, int* outBytesPerStride);
+
     status_t lockYCbCr(buffer_handle_t handle,
             uint32_t usage, const Rect& bounds, android_ycbcr *ycbcr);
 
@@ -109,7 +113,8 @@ public:
             uint32_t usage, const Rect& bounds, android_ycbcr *ycbcr,
             int fenceFd);
 
-    status_t unlock(buffer_handle_t handle, base::unique_fd* outFence = nullptr);
+    status_t unlock(buffer_handle_t handle, base::unique_fd* outFence);
+    status_t unlock(buffer_handle_t handle);
     status_t unlockAsync(buffer_handle_t handle, int* fenceFd) {
         base::unique_fd temp;
         status_t result = unlock(handle, fenceFd ? &temp : nullptr);
@@ -191,4 +196,3 @@ private:
 }; // namespace android
 
 #endif // ANDROID_UI_BUFFER_MAPPER_H
-

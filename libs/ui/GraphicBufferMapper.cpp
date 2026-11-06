@@ -188,6 +188,22 @@ status_t GraphicBufferMapper::lock(buffer_handle_t handle, uint32_t usage, const
     return OK;
 }
 
+status_t GraphicBufferMapper::lock(buffer_handle_t handle, uint32_t usage, const Rect& bounds,
+                                   void** vaddr, int* outBytesPerPixel,
+                                   int* outBytesPerStride) {
+    auto result = lock(handle, static_cast<int64_t>(usage), bounds);
+    if (!result.has_value()) return result.asStatus();
+    const auto& val = result.value();
+    *vaddr = val.address;
+    if (outBytesPerPixel) *outBytesPerPixel = val.bytesPerPixel;
+    if (outBytesPerStride) *outBytesPerStride = val.bytesPerStride;
+    return OK;
+}
+
+status_t GraphicBufferMapper::unlock(buffer_handle_t handle) {
+    return unlock(handle, nullptr);
+}
+
 status_t GraphicBufferMapper::lockYCbCr(buffer_handle_t handle, uint32_t usage, const Rect& bounds,
                                         android_ycbcr* ycbcr) {
     auto result = lockYCbCr(handle, static_cast<int64_t>(usage), bounds);
