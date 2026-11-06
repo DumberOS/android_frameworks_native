@@ -52,3 +52,6 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/bin/thermalserviced)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/etc/init/thermalservice.rc)
 $(call add-clean-step, find $(PRODUCT_OUT) -type f -name "gpuservice*" -print0 | xargs -0 rm -f)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/EXECUTABLES/gpuservice_intermediates)
+
+# DumberOS debug init filenames retain the original behavior.
+$(call add-clean-step, rm -f $(TARGET_OUT_ETC)/init/atrace_userdebug.rc)

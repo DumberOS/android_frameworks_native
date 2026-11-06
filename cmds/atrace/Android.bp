@@ -42,7 +42,7 @@ cc_binary {
 
     product_variables: {
         debuggable: {
-            init_rc: ["atrace_userdebug.rc"],
+            init_rc: ["atrace_dumberos.rc"],
         },
     },
 }
